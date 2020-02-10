@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+  background-image: url(/overlay.png), url(/bg.jpg);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-repeat: repeat, repeat-x;
+  background-size: 128px 128px, cover;
+}
+
+.App2 {
+  text-align: center;
+  background-image: url(/overlay.png), url(/bg.jpg);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-repeat: repeat, repeat-x;
+  background-size: 128px 128px, cover;
+}
+
+.Wrapper {
+  box-sizing: border-box;
+  height: 800px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.InnerWrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rem 4rem 0.25rem rgba(46, 43, 55, 0.575);
+}
+
+.boxShadow {
+  box-shadow: 0 2rem 4rem 0.25rem rgba(46, 43, 55, 0.575);
+}
