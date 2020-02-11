@@ -39,3 +39,9 @@
 .boxShadow {
   box-shadow: 0 2rem 4rem 0.25rem rgba(46, 43, 55, 0.575);
 }
+
+:global(.popup-content) {
+  color: black;
+  border-radius: 4px;
+  width: 400px;
+}

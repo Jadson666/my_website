@@ -1,58 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import { Carousel } from 'react-responsive-carousel'
+import React from 'react'
+import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import ReactDOM from 'react-dom'
-import styles from './App.module.css'
+import { CarouselBlock } from './components/CarouselBlock'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.module.css'
+import { EmailForm } from './components/EmailForm'
+import Modal from 'react-modal'
 
-const PICTURE_WIDTH = 800
+const Container = styled.div``
 
-const PicContainer = styled.div`
+const Header = styled.div`
+  background-color: black;
+  height: 70px;
+  color: #fff;
   display: flex;
-  justify-content: center;
-  padding-top: 150px;
-  padding-bottom: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 1.5rem;
 `
-const CarouselBackground = styled.div`
-  background-image: url(/overlay.png), url(/bg.jpg);
-  background-repeat: repeat, repeat-x;
-  background-size: 128px 128px, cover;
-`
+
+const ContactButton = styled.button``
+
+const style = {
+  content: {
+    width: '600px',
+    top: 'unset',
+    bottom: 'unset',
+    left: 'unset',
+    right: 'unset'
+  },
+  overlay: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+}
+
 export const App = () => {
-  const WrapRef = useRef(null)
-  let appDom
-  const [index, setIndex] = useState(0)
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    appDom = ReactDOM.findDOMNode(WrapRef.current)
-    if (!appDom) {
-      return
-    }
-    const carousel = appDom.querySelector('div.carousel')
-    carousel.classList.add(styles.boxShadow)
-  }, [])
+  const [modalIsOpen, setIsOpen] = React.useState(false)
   return (
-    <CarouselBackground>
-      <PicContainer ref={WrapRef}>
-        <Carousel
-          showArrows={true}
-          width={PICTURE_WIDTH}
-          showStatus={false}
-          infiniteLoop={true}
-          onChange={(i) => {
-            setIndex(i)
-          }}
+    <Container>
+      <Header>
+        Jadson
+        <ContactButton
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setIsOpen(true)}
         >
-          <div>
-            <img src="/content1.jpg" alt="content1" />
-            <p className="legend">Our Cat</p>
-          </div>
-          <div>
-            <img src="/content2.jpg" alt="content2" />
-            <p className="legend">The Beautiful School</p>
-          </div>
-        </Carousel>
-      </PicContainer>
-    </CarouselBackground>
+          Contact Me
+        </ContactButton>
+      </Header>
+      <CarouselBlock />
+      <Modal
+        isOpen={modalIsOpen}
+        contentLabel="Example Modal"
+        style={style}
+      >
+        <EmailForm></EmailForm>
+      </Modal>
+    </Container>
   )
 }
