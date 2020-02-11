@@ -8,7 +8,9 @@ import './App.module.css'
 import { EmailForm } from './components/EmailForm'
 import Modal from 'react-modal'
 
-const Container = styled.div``
+const Container = styled.div`
+  height: 100%;
+`
 
 const Header = styled.div`
   background-color: black;
@@ -41,6 +43,8 @@ const style = {
 
 export const App = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false)
+  const closeModal = () => setIsOpen(false)
+  const openModal = () => setIsOpen(true)
   return (
     <Container>
       <Header>
@@ -48,7 +52,7 @@ export const App = () => {
         <ContactButton
           type="button"
           className="btn btn-primary"
-          onClick={() => setIsOpen(true)}
+          onClick={openModal}
         >
           Contact Me
         </ContactButton>
@@ -58,8 +62,10 @@ export const App = () => {
         isOpen={modalIsOpen}
         contentLabel="Example Modal"
         style={style}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick
       >
-        <EmailForm></EmailForm>
+        <EmailForm closeModal={closeModal}></EmailForm>
       </Modal>
     </Container>
   )

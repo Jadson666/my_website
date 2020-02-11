@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
 
-export const EmailForm = () => {
+export const EmailForm = ({closeModal}) => {
   const [feedback, setFeedback] = useState('')
   const [name, setName] = useState('Name')
   const [email, setEmail] = useState('email@example.com')
@@ -36,6 +36,9 @@ export const EmailForm = () => {
   }
   return (
     <form className="test-mailing">
+      <button style={{marginBottom: 10}}type="button" class="close" aria-label="Close" onClick={closeModal}>
+        <span aria-hidden="true">&times;</span>
+      </button>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text" id="basic-addon1">
