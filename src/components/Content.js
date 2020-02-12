@@ -24,16 +24,36 @@ const Routes = categoryConfig.map((v) => {
 })
 
 const DivForTransition = styled.div`
-  height: ${({contentheight})=> contentheight + 'px'};
+  height: ${({ contentheight }) => contentheight + 'px'};
+`
+
+const VideoBLock = styled.video`
+  width: 100%;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+`
+const D = styled.div`
+  position: relative;
+  background: black;
+  z-index: -1;
+  overflow: hidden;
 `
 
 export const Content = ({ index }) => {
   return (
-    <DivForTransition contentheight={categoryConfig[index].contentHight}>
-      <Route path="/">
-        <Redirect to={`/${categoryConfig[0].title}`} />
-      </Route>
-      {Routes}
-    </DivForTransition>
+    <Fragment>
+      <D>
+        <VideoBLock autoPlay loop muted poster="poster.jpg">
+          <source src="/HD.mp4" type="video/mp4"></source>
+        </VideoBLock>
+        <DivForTransition contentheight={categoryConfig[index].contentHight}>
+          <Route path="/">
+            <Redirect to={`/${categoryConfig[0].title}`} />
+          </Route>
+          {Routes}
+        </DivForTransition>
+      </D>
+    </Fragment>
   )
 }

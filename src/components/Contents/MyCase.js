@@ -8,6 +8,7 @@ const Container = styled.div`
   line-height: 38px;
   font-size: 1.1em;
   text-align: center;
+  color: white;
 `
 
 export const MyCase = () => {
