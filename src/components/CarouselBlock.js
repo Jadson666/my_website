@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import ReactDOM from 'react-dom'
 import styles from '../App.module.css'
 import { categoryConfig } from './categories'
+import { useHistory, Route } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 
 const PICTURE_WIDTH = 800
 
@@ -27,7 +29,7 @@ const PictureTitle = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  font-family: "Rasa","Muli","Microsoft JhengHei",Sans-serif;
+  font-family: 'Rasa', 'Muli', 'Microsoft JhengHei', Sans-serif;
   font-weight: 700;
 `
 
@@ -35,7 +37,32 @@ const records = categoryConfig.map((v) => {
   return <div>{v.component}</div>
 })
 
-export const CarouselBlock = ({setIndex, index}) => {
+const Routes = categoryConfig.map((v) => {
+  return (
+    <Route path={`/${v.title}`} exact>
+      {({ match }) => {
+        return (
+          <CSSTransition
+            in={match != null}
+            timeout={300}
+            classNames="page"
+            unmountOnExit
+          >
+            <PictureTitle className="page">{v.title}</PictureTitle>
+          </CSSTransition>
+        )
+      }}
+    </Route>
+  )
+})
+
+const DivForTransition = styled.div`
+  position: relative;
+  height: 126px;
+`
+
+export const CarouselBlock = ({ setIndex, index }) => {
+  const h = useHistory()
   const WrapRef = useRef(null)
   let appDom
   useEffect(() => {
@@ -49,7 +76,9 @@ export const CarouselBlock = ({setIndex, index}) => {
   }, [])
   return (
     <CarouselBackground>
-      <PictureTitle>{categoryConfig[index].title}</PictureTitle>
+      <DivForTransition>
+        {Routes}
+      </DivForTransition>
       <PicContainer ref={WrapRef}>
         <Carousel
           showArrows={true}
@@ -59,6 +88,8 @@ export const CarouselBlock = ({setIndex, index}) => {
           selectedItem={index}
           onChange={(i) => {
             setIndex(i)
+            console.log(i)
+            h.push(`/${categoryConfig[i].title}`)
           }}
         >
           {records}

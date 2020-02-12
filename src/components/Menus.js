@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { categoryConfig } from './categories'
+import { Link } from 'react-router-dom'
 
 const ContactButton = styled.button``
 
@@ -22,7 +23,11 @@ const MenuContainer = styled.div`
 
 export const Menus = ({ openModal, setIndex }) => {
   const MenuItems = categoryConfig.map((v, i) => {
-    return <OneMenu onClick={() => setIndex(i)}>{v.title}</OneMenu>
+    return (
+      <Link to={`/${v.title}`}>
+        <OneMenu onClick={() => setIndex(i)}>{v.title}</OneMenu>
+      </Link>
+    )
   })
   return (
     <MenuContainer>

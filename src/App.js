@@ -12,7 +12,7 @@ import { Footer } from './components/Footer'
 import AlertTemplate from 'react-alert-template-basic'
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import { Content } from './components/Content'
-
+import { BrowserRouter, Switch } from 'react-router-dom'
 
 const options = {
   // you can also just use 'bottom center'
@@ -23,8 +23,7 @@ const options = {
   transition: transitions.SCALE
 }
 
-const Container = styled.div`
-`
+const Container = styled.div``
 
 const Header = styled.div`
   background-color: #313030;
@@ -55,8 +54,8 @@ const style = {
 const Name = styled.div`
   font-family: 'Edwardian script ITC';
   font-size: 2rem;
+  cursor: default;
 `
-
 
 export const App = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false)
@@ -64,25 +63,30 @@ export const App = () => {
   const openModal = () => setIsOpen(true)
   const [index, setIndex] = useState(0)
   return (
-    <AlertProvider template={AlertTemplate} {...options}> {/* hook wrapper for react-alert */}
-    <Container>
-      <Header>
-        <Name>Jadson</Name>
-        <Menus setIndex={setIndex} openModal={openModal} />
-      </Header>
-      <CarouselBlock index={index} setIndex={setIndex} />
-      <Content/>
-      <Footer />
-      <Modal
-        isOpen={modalIsOpen}
-        contentLabel="Example Modal"
-        style={style}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick
-      >
-        <EmailForm closeModal={closeModal}></EmailForm>
-      </Modal>
-    </Container>
-    </AlertProvider>
+    <BrowserRouter>
+      <Switch>
+        <AlertProvider template={AlertTemplate} {...options}>
+          {/* hook wrapper for react-alert */}
+          <Container>
+            <Header>
+              <Name>Jadson</Name>
+              <Menus setIndex={setIndex} openModal={openModal} />
+            </Header>
+            <CarouselBlock index={index} setIndex={setIndex} />
+            <Content index={index} />
+            <Footer />
+            <Modal
+              isOpen={modalIsOpen}
+              contentLabel="Example Modal"
+              style={style}
+              onRequestClose={closeModal}
+              shouldCloseOnOverlayClick
+            >
+              <EmailForm closeModal={closeModal}></EmailForm>
+            </Modal>
+          </Container>
+        </AlertProvider>
+      </Switch>
+    </BrowserRouter>
   )
 }
