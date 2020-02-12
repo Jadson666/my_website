@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
 import styled from 'styled-components'
@@ -35,10 +35,9 @@ const records = categoryConfig.map((v) => {
   return <div>{v.component}</div>
 })
 
-export const CarouselBlock = () => {
+export const CarouselBlock = ({setIndex, index}) => {
   const WrapRef = useRef(null)
   let appDom
-  const [index, setIndex] = useState(0)
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     appDom = ReactDOM.findDOMNode(WrapRef.current)
@@ -57,6 +56,7 @@ export const CarouselBlock = () => {
           width={PICTURE_WIDTH}
           showStatus={false}
           infiniteLoop={true}
+          selectedItem={index}
           onChange={(i) => {
             setIndex(i)
           }}

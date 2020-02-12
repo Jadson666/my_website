@@ -14,5 +14,6 @@ code {
 }
 
 html, body, #root {
-  height: 100%
+  height: 100%;
+  font-family: "Rasa","Muli","Microsoft JhengHei",Sans-serif;
 }
