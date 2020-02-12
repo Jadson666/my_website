@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { Icon } from '../Icons/Icon'
 
 const FooterContainer = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 10px 50px;
   background-color: #000;
@@ -11,12 +13,9 @@ const FooterContainer = styled.div`
 `
 
 const IconBlock = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 6px;
   display: flex;
   align-items: center;
-  width: 150px;
+  width: 180px;
   justify-content: space-between;
 `
 
@@ -25,10 +24,10 @@ export const Footer = () => {
     <FooterContainer>
       &copy; {new Date().getFullYear()} Copyright: Jadson 個人工作室
       <IconBlock>
-        <Icon type="linkedIn" />
-        <Icon type="instagram" />
-        <Icon type="youtube" />
-        <Icon type="facebook" />
+        <Icon type="linkedIn" hoverColor={'#47c1dc'}/>
+        <Icon type="instagram" hoverColor={'#c57ac0'}/>
+        <Icon type="youtube" hoverColor={'#ff3548'}/>
+        <Icon type="facebook" hoverColor={'#47c1dc'}/>
       </IconBlock>
     </FooterContainer>
   )

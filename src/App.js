@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import { Footer } from './components/Footer'
 import AlertTemplate from 'react-alert-template-basic'
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import { Content } from './components/Content'
 
 
 const options = {
@@ -23,7 +24,6 @@ const options = {
 }
 
 const Container = styled.div`
-  height: 100%;
 `
 
 const Header = styled.div`
@@ -71,6 +71,7 @@ export const App = () => {
         <Menus setIndex={setIndex} openModal={openModal} />
       </Header>
       <CarouselBlock index={index} setIndex={setIndex} />
+      <Content/>
       <Footer />
       <Modal
         isOpen={modalIsOpen}

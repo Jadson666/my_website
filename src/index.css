@@ -17,3 +17,10 @@ html, body, #root {
   height: 100%;
   font-family: "Rasa","Muli","Microsoft JhengHei",Sans-serif;
 }
+
+.ReactModal__Body--open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
