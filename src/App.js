@@ -8,9 +8,19 @@ import { EmailForm } from './components/EmailForm'
 import Modal from 'react-modal'
 import { Menus } from './components/Menus'
 import '@fortawesome/fontawesome-free/css/all.css'
-import { Icon } from './Icons/Icon'
+import { Footer } from './components/Footer'
+import AlertTemplate from 'react-alert-template-basic'
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 
-// import Footer from './components/Footer'
+
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE
+}
 
 const Container = styled.div`
   height: 100%;
@@ -47,23 +57,6 @@ const Name = styled.div`
   font-size: 2rem;
 `
 
-const Footer = styled.div`
-  position: relative;
-  width: 100%;
-  padding: 10px 50px;
-  background-color: #000;
-  color: #ccc9c9;
-`
-
-const IconBlock = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 6px;
-  display: flex;
-  align-items: center;
-  width: 150px;
-  justify-content: space-between;
-`
 
 export const App = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false)
@@ -71,21 +64,14 @@ export const App = () => {
   const openModal = () => setIsOpen(true)
   const [index, setIndex] = useState(0)
   return (
+    <AlertProvider template={AlertTemplate} {...options}> {/* hook wrapper for react-alert */}
     <Container>
       <Header>
         <Name>Jadson</Name>
         <Menus setIndex={setIndex} openModal={openModal} />
       </Header>
       <CarouselBlock index={index} setIndex={setIndex} />
-      <Footer>
-        &copy; {new Date().getFullYear()} Copyright: Jadson 個人工作室
-        <IconBlock>
-          <Icon type="linkedIn" />
-          <Icon type="instagram" />
-          <Icon type="youtube" />
-          <Icon type="facebook" />
-        </IconBlock>
-      </Footer>
+      <Footer />
       <Modal
         isOpen={modalIsOpen}
         contentLabel="Example Modal"
@@ -96,5 +82,6 @@ export const App = () => {
         <EmailForm closeModal={closeModal}></EmailForm>
       </Modal>
     </Container>
+    </AlertProvider>
   )
 }

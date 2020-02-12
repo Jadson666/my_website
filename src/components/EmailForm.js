@@ -1,42 +1,67 @@
 import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
+import { DotLoader } from 'react-spinners'
+import styled from 'styled-components'
+import { useAlert } from "react-alert"
 
-export const EmailForm = ({closeModal}) => {
+const InputGroup = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const EmailForm = ({ closeModal }) => {
   const [feedback, setFeedback] = useState('')
-  const [name, setName] = useState('Name')
-  const [email, setEmail] = useState('email@example.com')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [isloading, setIsloading] = useState(false)
+  const alert = useAlert()
 
-  const handleChange = (event) => {
-    setFeedback(event.target.value)
-  }
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    if (feedback === '') {
+      alert.error("No! do not send me an empty feedback")
+      return false
+    }
+    setIsloading(true)
     const templateId = 'template_QbxuLxpp'
-    if (feedback === '') return false
-    sendFeedback(templateId, {
-      message_html: feedback,
-      from_name: name,
-      reply_to: email
-    })
+
+    // sendFeedback(templateId, {
+    //   message_html: feedback,
+    //   from_name: name,
+    //   reply_to: `${email}@gmail.com`
+    // })
+    try {
+      await emailjs.send(
+        'outlook',
+        templateId,
+        {
+          message_html: feedback,
+          from_name: name,
+          reply_to: `${email}@gmail.com`
+        },
+        'user_Bd6927NBiQ63ByVQ8Fqlg'
+      )
+      alert.show('Email successfully sent!')
+      closeModal()
+    } catch (error) {
+      alert.error('something wrong, fail to send mail')
+      console.error(
+        'Oh well, you failed. Here some thoughts on the error that occured:',
+        error
+      )
+    } finally {
+      setIsloading(false)
+    }
   }
 
-  const sendFeedback = (templateId, variables) => {
-    emailjs
-      .send('outlook', templateId, variables, 'user_Bd6927NBiQ63ByVQ8Fqlg')
-      .then((res) => {
-        console.log('Email successfully sent!')
-      })
-      // Handle errors here however you like, or use a React error boundary
-      .catch((err) =>
-        console.error(
-          'Oh well, you failed. Here some thoughts on the error that occured:',
-          err
-        )
-      )
-  }
   return (
     <form className="test-mailing">
-      <button style={{marginBottom: 10}}type="button" class="close" aria-label="Close" onClick={closeModal}>
+      <button
+        style={{ marginBottom: 10 }}
+        type="button"
+        className="close"
+        aria-label="Close"
+        onClick={closeModal}
+      >
         <span aria-hidden="true">&times;</span>
       </button>
       <div className="input-group mb-3">
@@ -47,20 +72,28 @@ export const EmailForm = ({closeModal}) => {
         </div>
         <input
           type="text"
+          name="name"
           className="form-control"
-          placeholder="Username"
+          placeholder="What's your name"
           aria-label="Username"
           aria-describedby="basic-addon1"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={isloading}
         />
       </div>
       <div>
         <div className="input-group mb-3">
           <input
             type="text"
+            name="mail"
             className="form-control"
             placeholder="your gmail"
             aria-label="Recipient's username"
             aria-describedby="basic-addon2"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isloading}
           />
           <div className="input-group-append">
             <span className="input-group-text" id="basic-addon2">
@@ -69,24 +102,31 @@ export const EmailForm = ({closeModal}) => {
           </div>
         </div>
         <div className="form-group">
-          <label for="test-mailing">Your Message</label>
+          <label htmlFor="test-mailing">Your Message</label>
           <textarea
             className="form-control"
             id="test-mailing"
             name="test-mailing"
             rows="7"
             required
-            onChange={handleChange}
+            onChange={(e) => setFeedback(e.target.value)}
             value={feedback}
+            disabled={isloading}
           ></textarea>
         </div>
       </div>
-      <input
-        type="button"
-        value="Submit"
-        className="btn btn-secondary"
-        onClick={handleSubmit}
-      />
+      <InputGroup>
+        <input
+          type="button"
+          value="Submit"
+          className="btn btn-secondary"
+          onClick={handleSubmit}
+          disabled={isloading}
+        />
+        <div style={{ padding: 5, marginLeft: 10 }}>
+          <DotLoader loading={isloading} size={20} color={'#585a5d'} />
+        </div>
+      </InputGroup>
     </form>
   )
 }
