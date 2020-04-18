@@ -2,6 +2,7 @@ import React from 'react'
 import { Specialized } from './Contents/Specialized'
 import { MyCase } from './Contents/MyCase'
 import { AboutMe } from './Contents/AboutMe'
+import { Home } from './Contents/Home'
 
 export const categoryConfig = [
   {
@@ -23,3 +24,9 @@ export const categoryConfig = [
     contentHight: 808
   },
 ]
+
+export const homePageConfig = {
+  title: '',
+  content: Home,
+  contentHight: 1350
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
 import { DotLoader } from 'react-spinners'
 import styled from 'styled-components'
-import { useAlert } from "react-alert"
+import { useAlert } from 'react-alert'
 
 const InputGroup = styled.div`
   display: flex;
@@ -18,17 +18,12 @@ export const EmailForm = ({ closeModal }) => {
 
   const handleSubmit = async (event) => {
     if (feedback === '') {
-      alert.error("No! do not send me an empty feedback")
+      alert.error('No! do not send me an empty feedback')
       return false
     }
     setIsloading(true)
     const templateId = 'template_QbxuLxpp'
 
-    // sendFeedback(templateId, {
-    //   message_html: feedback,
-    //   from_name: name,
-    //   reply_to: `${email}@gmail.com`
-    // })
     try {
       await emailjs.send(
         'outlook',
@@ -36,7 +31,7 @@ export const EmailForm = ({ closeModal }) => {
         {
           message_html: feedback,
           from_name: name,
-          reply_to: `${email}@gmail.com`
+          reply_to: email
         },
         'user_Bd6927NBiQ63ByVQ8Fqlg'
       )
@@ -83,24 +78,22 @@ export const EmailForm = ({ closeModal }) => {
         />
       </div>
       <div>
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            name="mail"
-            className="form-control"
-            placeholder="your gmail"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isloading}
-          />
-          <div className="input-group-append">
-            <span className="input-group-text" id="basic-addon2">
-              @gmail.com
-            </span>
+        <div className="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="mail"
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isloading}
+              value={email}
+            />
+            <small id="emailHelp" className="form-text text-muted">
+              I'll never share your email with anyone else.
+            </small>
           </div>
-        </div>
         <div className="form-group">
           <label htmlFor="test-mailing">Your Message</label>
           <textarea

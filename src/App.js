@@ -12,7 +12,7 @@ import { Footer } from './components/Footer'
 import AlertTemplate from 'react-alert-template-basic'
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import { Content } from './components/Content'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter, Switch, Link } from 'react-router-dom'
 
 const options = {
   // you can also just use 'bottom center'
@@ -47,21 +47,22 @@ const style = {
   overlay: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(138, 138, 138, 0.75)'
   }
 }
 
 const Name = styled.div`
   font-family: 'Edwardian script ITC';
   font-size: 2rem;
-  cursor: default;
+  cursor: pointer;
 `
 
 export const App = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false)
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(-1)
   return (
     <BrowserRouter>
       <Switch>
@@ -69,10 +70,12 @@ export const App = () => {
           {/* hook wrapper for react-alert */}
           <Container>
             <Header>
-              <Name>Jadson</Name>
+              <Link to='/' className='router-link' onClick={()=> setIndex(-1) /* HomePage*/ }>
+                <Name>Jadson</Name>
+              </Link>
               <Menus setIndex={setIndex} openModal={openModal} />
             </Header>
-            <CarouselBlock index={index} setIndex={setIndex} />
+            {/* <CarouselBlock index={index} setIndex={setIndex} /> */}
             <Content index={index} />
             <Footer />
             <Modal
